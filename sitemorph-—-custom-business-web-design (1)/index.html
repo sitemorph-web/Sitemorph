@@ -46,5 +46,24 @@
   <body class="bg-[#050505] text-[#A0A0A0] antialiased selection:bg-[#22E55E]/25 selection:text-white overflow-x-hidden">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+  // Removes Netlify free-tier injected badge
+  const removeNetlifyBadge = () => {
+    document.querySelectorAll('a, div, span, iframe').forEach((el) => {
+      if (
+        el.textContent?.trim() === 'Powered by Netlify' ||
+        el.getAttribute('href')?.includes('utm_source=netlify-badge') ||
+        el.id?.includes('netlify')
+      ) {
+        el.remove();
+      }
+    });
+  };
+  window.addEventListener('DOMContentLoaded', removeNetlifyBadge);
+  new MutationObserver(removeNetlifyBadge).observe(document.documentElement, {
+    childList: true,
+    subtree: true,
+  });
+</script>
   </body>
 </html>
